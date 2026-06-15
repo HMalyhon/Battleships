@@ -4,7 +4,7 @@ import GameBoard from './components/GameBoard';
 import GameStatus from './components/GameStatus';
 import ShipPlacement from './components/ShipPlacement';
 import { gameService } from './services/api';
-import { Ship, GameBoard as GameBoardType } from './types';
+import { Ship } from './types';
 
 function App() {
   const [gameId, setGameId] = useState<string | null>(null);
@@ -12,7 +12,6 @@ function App() {
   const [opponentBoard, setOpponentBoard] = useState<string[][]>([]);
   const [message, setMessage] = useState<string>('Welcome to Battleships!');
   const [isGameOver, setIsGameOver] = useState(false);
-  const [winner, setWinner] = useState<string | null>(null);
   const [isSetupPhase, setIsSetupPhase] = useState(true);
   const [availableShips, setAvailableShips] = useState<Ship[]>([
     { type: 'battleship', size: 5, placed: false, id: 'battleship-1' },
@@ -28,7 +27,6 @@ function App() {
       setGameId(newGameId);
       setMessage('Place your ships!');
       setIsGameOver(false);
-      setWinner(null);
       setIsSetupPhase(true);
       setAvailableShips([
         { type: 'battleship', size: 5, placed: false, id: 'battleship-1' },
@@ -47,7 +45,6 @@ function App() {
       setPlayerBoard(gameBoard.playerBoard);
       setOpponentBoard(gameBoard.opponentBoard);
       setIsGameOver(gameBoard.isGameOver);
-      setWinner(gameBoard.winner);
 
       if (gameBoard.isGameOver && gameBoard.winner) {
         setMessage(`Game Over! ${gameBoard.winner} wins!`);
@@ -139,11 +136,11 @@ function App() {
                 <Typography variant="h6" gutterBottom>
                   Your Board
                 </Typography>
-                <GameBoard board={playerBoard} onCellClick={() => {}} />
+                <GameBoard board={playerBoard} />
               </Grid>
               <Grid item xs={12} md={6}>
                 <Typography variant="h6" gutterBottom>
-                  Opponent's Board
+                  Opponent&apos;s Board
                 </Typography>
                 <GameBoard board={opponentBoard} onCellClick={handleCellClick} />
               </Grid>

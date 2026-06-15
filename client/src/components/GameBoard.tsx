@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 
 interface GameBoardProps {
   board: string[][];
-  onCellClick: (row: number, col: number) => void;
+  onCellClick?: (row: number, col: number) => void;
 }
 
 const Cell = styled(Paper)(({ theme }) => ({
@@ -88,7 +88,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ board, onCellClick }) => {
                 <Grid item key={`${rowIndex}-${colIndex}`}>
                   <Cell
                     className={getCellClass(cell)}
-                    onClick={() => onCellClick(rowIndex, colIndex)}
+                    onClick={onCellClick ? () => onCellClick(rowIndex, colIndex) : undefined}
                     elevation={1}
                   >
                     {cell}
